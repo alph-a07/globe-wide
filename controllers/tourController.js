@@ -2,14 +2,19 @@ const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
     try {
-        // req.query => query parameters object
+        // 1. req.query => query parameters object
         const queryObj = { ...req.query }; // deep copy
 
-        // Removing non-relavant query parameters
+        // 2. Removing non-relavant query parameters
         const excludedFields = ['page', 'sort', 'limit', 'fields '];
         excludedFields.forEach(field => delete queryObj[field]);
 
-        const query = Tour.find(queryObj);
+        // 3. Handling inequality queries
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+        // 4. Execute query
+        const query = Tour.find(JSON.parse(queryStr));
         const tours = await query;
 
         res.status(200).json({

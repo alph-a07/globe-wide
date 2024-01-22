@@ -5,8 +5,8 @@ const Tour = require('../../models/tourModel');
 
 dotenv.config({ path: './config.env' });
 
+// Connect to database
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
-
 mongoose.connect(DB).then(conn => console.log('Connected to DB!'));
 
 // Read JSON file
@@ -34,5 +34,8 @@ const deleteData = async function () {
     }
 };
 
+// Run the appropriate functions based on command line arguments
 if (process.argv[2] === '--import') importData();
 else if (process.argv[2] === '--delete') deleteData();
+
+console.log(process.argv);

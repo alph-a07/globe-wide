@@ -6,7 +6,7 @@ exports.getAllTours = async (req, res) => {
         const queryObj = { ...req.query }; // deep copy
 
         // 2. Removing non-relavant query parameters
-        const excludedFields = ['page', 'sort', 'limit', 'fields '];
+        const excludedFields = ['page', 'sort', 'limit', 'fields'];
         excludedFields.forEach(field => delete queryObj[field]);
 
         // 3. Handling inequality queries
@@ -24,7 +24,16 @@ exports.getAllTours = async (req, res) => {
             query = query.sort('-createdAt');
         }
 
-        // 5. Execute query
+        // 5. Limiting fields
+        if (req.query.fields) {
+            const limitTo = req.query.fields.split(',').join(' ');
+            query = query.select(limitTo);
+        } else {
+            // Default limiting - avoid __v
+            query = query.select('-__v');
+        }
+
+        // 6. Execute query
         const tours = await query;
 
         res.status(200).json({

@@ -7,7 +7,7 @@ dotenv.config({ path: './config.env' });
 
 // Connect to database
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
-mongoose.connect(DB).then(conn => console.log('Connected to DB!'));
+mongoose.connect(DB).then(_ => console.log('Connected to DB!'));
 
 // Read JSON file
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'));
@@ -38,4 +38,9 @@ const deleteData = async function () {
 if (process.argv[2] === '--import') importData();
 else if (process.argv[2] === '--delete') deleteData();
 
-console.log(process.argv);
+// console.log(process.argv);
+// [
+//     '/usr/bin/node',
+//     '/home/itsjeel01/Developer/globewide/dev-data/data/import-dev-data.js',
+//     '--import'
+//   ]

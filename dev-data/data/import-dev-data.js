@@ -17,10 +17,10 @@ const importData = async function () {
     try {
         await Tour.create(tours);
         console.log('Data successfully deleted');
-        process.exit();
     } catch (err) {
         console.log(err);
     }
+    process.exit();
 };
 
 // Delete all data from collection
@@ -28,10 +28,10 @@ const deleteData = async function () {
     try {
         await Tour.deleteMany();
         console.log('Data successfully deleted');
-        process.exit();
     } catch (err) {
         console.log(err);
     }
+    process.exit();
 };
 
 // Run the appropriate functions based on command line arguments

@@ -1,12 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
+const globalErrorController = require('./controllers/errorController');
 
 const app = express();
 
-// MIDDLEWARES
 app.use(express.json());
 // Use logger only in development environment
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
@@ -15,12 +16,12 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
-// Stray routes handler
+// Throws error for all stray routes
 app.all('*', (req, res, next) => {
-    res.status(404).json({
-        status: 'failed',
-        message: `Can't find ${req.originalUrl}!`,
-    });
+    next(new AppError(`Can't find ${req.originalUrl}`, 404));
 });
+
+// Handles any error in the middleware stack
+app.use(globalErrorController);
 
 module.exports = app;

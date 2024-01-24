@@ -4,7 +4,7 @@ const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
     {
-        //prettier-ignore
+        // prettier-ignore
         name: { 
             type: String, 
             required: [true, 'A tour must have a name'], 

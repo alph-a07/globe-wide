@@ -11,7 +11,7 @@ exports.aliasTopTours = (req, res, next) => {
 
 exports.getAllTours = async (req, res) => {
     try {
-        //prettier-ignore
+        // prettier-ignore
         const features = new APIFeatures(Tour.find(), req.query)
         .filter()
         .sort()

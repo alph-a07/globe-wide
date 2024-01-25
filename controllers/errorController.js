@@ -7,8 +7,18 @@ const handleCastError = err => {
 };
 
 const handleDuplicateEntry = err => {
+    // Relevant error message is in between double quotes
     const value = err.message.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
     const message = `Field already exists: ${value}`;
+
+    return new AppError(message, 400);
+};
+
+const handleValidationError = err => {
+    // Array of validation errors in different fields
+    const errors = Object.values(err.errors).map(error => error.message);
+
+    const message = `Invalid input! ${errors.join('. ')}`;
 
     return new AppError(message, 400);
 };
@@ -52,6 +62,7 @@ module.exports = (err, req, res, next) => {
 
         if (err.name === 'CastError') error = handleCastError(err);
         if (err.code === 11000) error = handleDuplicateEntry(err);
+        if (err.name === 'ValidationError') error = handleValidationError(err);
 
         sendErrorProd(error, res);
     }

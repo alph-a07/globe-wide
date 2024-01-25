@@ -11,7 +11,7 @@ const tourSchema = new mongoose.Schema(
             unique: true, 
             trim: true,
             maxLength: [40, 'A tour name can have maximum 40 characters'], 
-            maxLength: [40, 'A tour name must have atleast 10 characters'], 
+            minLength: [10, 'A tour name must have atleast 10 characters'], 
         },
         slug: String,
         duration: {

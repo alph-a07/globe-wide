@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema({
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
+    // 12 - SALT(random string) length for extra security
     this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined;
 

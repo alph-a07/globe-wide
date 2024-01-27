@@ -11,6 +11,17 @@ const signToken = id =>
         expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
+const sendToken = (user, statusCode, res) => {
+    const token = signToken(user._id);
+    res.status(statusCode).json({
+        status: 'success',
+        token,
+        data: {
+            user,
+        },
+    });
+};
+
 exports.signup = catchAsync(async (req, res, next) => {
     const newUser = await User.create({
         name: req.body.name,
@@ -21,38 +32,26 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
 
     // Generating JWT
-    const token = signToken(newUser._id);
-
-    res.status(201).json({
-        status: 'success',
-        token,
-        data: {
-            user: newUser,
-        },
-    });
+    sendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
 
-    // Validate email and password inputs
+    // 1. Validate email and password inputs
     if (!email || !password) {
         return next(new AppError('Both email and password are required!', 400));
     }
 
-    // Check if user exists & provided password is correct
+    // 2. Check if user exists & provided password is correct
     const user = await User.findOne({ email }).select('+password');
 
     if (!user || !(await user.checkPassword(password, user.password))) {
         return next(new AppError('This combination of email and password does not exist', 401));
     }
 
-    // If all OK, send token
-    const token = signToken(user._id);
-    res.status(200).json({
-        status: 'success',
-        token,
-    });
+    // 3. If all OK, send token
+    sendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -154,9 +153,23 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     // 3. Update changedPasswordAt property -- Handled by middlware
 
     // 4. Send login JWT
-    const token = signToken(user._id);
-    res.status(200).json({
-        status: 'success',
-        token,
-    });
+    sendToken(user, 200, res);
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+    // 1. Get user
+    const user = await User.findById(req.user.id).select('+password');
+
+    // 2. Check if the old password is correct
+    if (!user.checkPassword(req.body.passwordCurrent, user.password)) {
+        return next(new AppError('Provided old password is wrong.', 401));
+    }
+
+    // 3. Update new password
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    await user.save();
+
+    // 4. Send login JWT
+    sendToken(user, 200, res);
 });

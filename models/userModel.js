@@ -31,6 +31,7 @@ const userSchema = mongoose.Schema({
             message: 'Both passwords do not match!',
         },
     },
+    passwordChangedAt: Date,
 });
 
 // Password encryption middleware
@@ -46,6 +47,16 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.checkPassword = async function (providedPassword, correctPassword) {
     return await bcrypt.compare(providedPassword, correctPassword);
+};
+
+userSchema.methods.wasPasswordChanged = async function (JWTTimestamp) {
+    if (this.passwordChangedAt) {
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+
+        return changedTimestamp > JWTTimestamp;
+    }
+
+    return false;
 };
 
 const User = mongoose.model('User', userSchema);

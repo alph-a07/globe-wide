@@ -40,6 +40,11 @@ const userSchema = mongoose.Schema({
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
+    active: {
+        type: Boolean,
+        default: true,
+        select: false,
+    },
 });
 
 // Password encryption middleware
@@ -60,6 +65,12 @@ userSchema.pre('save', function (next) {
     // The document saving is slower than JWT generation
     // Make adjustment of 1 sec to compensate
     this.passwordChangedAt = Date.now() - 1000;
+    next();
+});
+
+// Hide inactive accounts middleware
+userSchema.pre(/^find/, function (next) {
+    this.find({ active: { $ne: false } });
     next();
 });
 

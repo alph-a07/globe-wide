@@ -15,6 +15,7 @@ exports.signup = catchAsync(async (req, res, next) => {
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
+        role: req.body.role,
     });
 
     // Generating JWT
@@ -74,6 +75,18 @@ exports.protect = catchAsync(async (req, res, next) => {
         return next(new AppError('The account password was changed, try logging in again with the new password.', 401));
     }
 
+    console.log('protect');
+
     req.user = user;
     next();
 });
+
+exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(new AppError('You are not authorised to perform this operation', 403));
+        }
+
+        next();
+    };
+};

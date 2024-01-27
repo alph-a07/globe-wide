@@ -1,8 +1,10 @@
+const crypto = require('crypto');
 const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const jwt = require('jsonwebtoken');
 const AppError = require('../utils/appError');
+const sendEmail = require('../utils/email');
 
 const signToken = id =>
     jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -90,3 +92,71 @@ exports.restrictTo = (...roles) => {
         next();
     };
 };
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+    // 1. Get user from email
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+        return next(new AppError('User with specified email does not exist!'), 404);
+    }
+
+    // 2. Generate a random reset token
+    const resetToken = user.generateResetToken();
+    await user.save({ validateBeforeSave: false }); // To save the token only to database
+
+    // 3. Send reset email to user
+    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
+
+    const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}. \nIf you did not forget your password, please ignore this email.`;
+
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: 'Reset password token(Valid for 10 min)',
+            message,
+        });
+    } catch (err) {
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({ validateBeforeSave: false });
+
+        return next(new AppError('There was an error processing your request, please try again later.'));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Token sent to email address!',
+    });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+    // 1. Get user from the reset token
+    const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+    // prettier-ignore
+    const user = await User.findOne({ 
+        passwordResetToken: hashedToken, 
+        passwordResetExpires: { $gt: Date.now() },
+    });
+
+    console.log(user);
+
+    // 2. If the user and token are valid, set the new password
+    if (!user) return next(new AppError('Token is invalid or has expired', 400));
+
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save();
+
+    // 3. Update changedPasswordAt property -- Handled by middlware
+
+    // 4. Send login JWT
+    const token = signToken(user._id);
+    res.status(200).json({
+        status: 'success',
+        token,
+    });
+});

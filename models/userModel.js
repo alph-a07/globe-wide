@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -37,6 +38,8 @@ const userSchema = mongoose.Schema({
         },
     },
     passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
 });
 
 // Password encryption middleware
@@ -47,6 +50,16 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined;
 
+    next();
+});
+
+// Password changed notifying middleware
+userSchema.pre('save', function (next) {
+    if (!this.isModified('password') || this.isNew) return next();
+
+    // The document saving is slower than JWT generation
+    // Make adjustment of 1 sec to compensate
+    this.passwordChangedAt = Date.now() - 1000;
     next();
 });
 
@@ -62,6 +75,19 @@ userSchema.methods.wasPasswordChanged = async function (JWTTimestamp) {
     }
 
     return false;
+};
+
+userSchema.methods.generateResetToken = function () {
+    // 1. Generate a random reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    // 2. Encrypt the token and store it to database
+    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    // 3. Set token expiry time
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+    return resetToken;
 };
 
 const User = mongoose.model('User', userSchema);

@@ -4,6 +4,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
@@ -20,6 +21,20 @@ app.use(mongoSanitize());
 
 // Data sanitization middleware -- Against cross site scripting attacks
 app.use(xss());
+
+// Parameter polution preventing middleware
+// prettier-ignore
+app.use(
+    hpp({
+        whitelist: [
+            'duration', 
+            'ratingsAverage', 
+            'ratingsQuantity', 
+            'maxGroupSize', 
+            'difficulty',
+        ],
+    }),
+);
 
 // Security HTTP headers middleware
 app.use(helmet());

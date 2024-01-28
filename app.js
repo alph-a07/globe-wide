@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
@@ -9,9 +10,13 @@ const globalErrorController = require('./controllers/errorController');
 
 const app = express();
 
-app.use(express.json());
+// Body data parser middleware
+app.use(express.json({ limit: '10kb' }));
 
-// Use logger only in development environment
+// Security HTTP headers middleware
+app.use(helmet());
+
+// Development logging middleware
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 // API Rate limiting middleware

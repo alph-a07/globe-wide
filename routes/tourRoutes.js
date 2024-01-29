@@ -1,4 +1,5 @@
 const express = require('express');
+
 const {
     getAllTours,
     createTour,
@@ -9,9 +10,14 @@ const {
     getTourStats,
     getMonthlyPlan,
 } = require('../controllers/tourController');
+
 const { protect, restrictTo } = require('../controllers/authController');
+const reviewRouter = require('../routes/reviewsRoutes');
 
 const router = express.Router();
+
+// Redirect review routes to reviewRouter
+router.use('/:tourId/reviews', reviewRouter);
 
 router.route('/stats').get(getTourStats);
 router.route('/monthly-plan/:year').get(getMonthlyPlan);

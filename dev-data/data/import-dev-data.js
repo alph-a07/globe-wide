@@ -10,13 +10,13 @@ const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSW
 mongoose.connect(DB).then(_ => console.log('Connected to DB!'));
 
 // Read JSON file
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'));
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 // Import data to database
 const importData = async function () {
     try {
         await Tour.create(tours);
-        console.log('Data successfully deleted');
+        console.log('Data successfully imported');
     } catch (err) {
         console.log(err);
     }

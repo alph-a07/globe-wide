@@ -117,16 +117,27 @@ tourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7;
 });
 
+// Slugify middleware
 tourSchema.pre('save', function (next) {
     this.slug = slugify(this.name, { lower: true });
     next();
 });
 
+// Exclude secret tours while querying  middleware
 tourSchema.pre(/^find/, function (next) {
     this.find({ secretTour: { $ne: true } });
     next();
 });
 
+// Query guides along with tour middleware
+tourSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'guides',
+        select: '-__v -passwordChangedAt',
+    });
+});
+
+// Exclude secrt tours while aggregating middleware
 tourSchema.pre('aggregate', function (next) {
     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
     next();

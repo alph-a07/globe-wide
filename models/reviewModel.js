@@ -75,11 +75,13 @@ reviewSchema.statics.calcAvgRatings = async function (tourId) {
     }
 };
 
+// -- Update tour ratings on new review --
 reviewSchema.post('save', function () {
     // this keyword refers the Review document
     this.constructor.calcAvgRatings(this.tour);
 });
 
+// -- Pass the review object to post update/delete hook --
 reviewSchema.pre(/^findOneAnd/, async function (next) {
     // this keyword refers to the query
     // Mongoose no longer allows executing the same query instance twice -- use clone()
@@ -87,6 +89,7 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
     next();
 });
 
+// -- Update tour ratings on review update/delete --
 reviewSchema.post(/^findOneAnd/, async function () {
     // this keyword refers to the query -- already executed at this stage
     this.review.constructor.calcAvgRatings(this.review.tour);

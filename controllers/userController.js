@@ -52,6 +52,12 @@ exports.createUser = (req, res) => {
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
 
+// Put the id in params in order to use the factory function
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id;
+    next();
+};
+
 // DO NOT change passwords with this
 exports.updateUser = factory.updateOne(User);
 

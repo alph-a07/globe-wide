@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./tourModel');
 
 const reviewSchema = mongoose.Schema(
     {
@@ -44,6 +45,51 @@ reviewSchema.pre(/^find/, function (next) {
     });
 
     next();
+});
+
+reviewSchema.statics.calcAvgRatings = async function (tourId) {
+    const stats = await this.aggregate([
+        {
+            $match: { tour: tourId },
+        },
+        {
+            $group: {
+                _id: '$tour',
+                nRating: { $sum: 1 },
+                avgRating: { $avg: '$rating' },
+            },
+        },
+    ]);
+
+    if (stats.length !== 0) {
+        // prettier-ignore
+        await Tour.findByIdAndUpdate(tourId, { 
+            ratingsAverage: stats[0].avgRating, 
+            ratingsQuantity: stats[0].nRating, 
+        });
+    } else {
+        await Tour.findByIdAndUpdate(tourId, {
+            ratingsAverage: 4.5,
+            ratingsQuantity: 0,
+        });
+    }
+};
+
+reviewSchema.post('save', function () {
+    // this keyword refers the Review document
+    this.constructor.calcAvgRatings(this.tour);
+});
+
+reviewSchema.pre(/^findOneAnd/, async function (next) {
+    // this keyword refers to the query
+    // Mongoose no longer allows executing the same query instance twice -- use clone()
+    this.review = await this.clone().findOne();
+    next();
+});
+
+reviewSchema.post(/^findOneAnd/, async function () {
+    // this keyword refers to the query -- already executed at this stage
+    this.review.constructor.calcAvgRatings(this.review.tour);
 });
 
 const Review = mongoose.model('Review', reviewSchema);

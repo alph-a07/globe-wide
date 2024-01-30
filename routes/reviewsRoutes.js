@@ -1,13 +1,13 @@
 const express = require('express');
-
 const { getAllReviews, createReview, deleteReview, upadteReview, setTourAndUser, getReview } = require('../controllers/reviewController');
 const { protect, restrictTo } = require('../controllers/authController');
 
-// --- No review operations can be performed without login ---
-router.use(protect)
 
 // Accepts parameters from other routes 
 const router = express.Router({ mergeParams: true });
+
+// --- No review operations can be performed without login ---
+router.use(protect);
 
 router.route('/')
 .get(getAllReviews)

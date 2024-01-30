@@ -20,16 +20,22 @@ const router = express.Router();
 router.use('/:tourId/reviews', reviewRouter);
 
 router.route('/stats').get(getTourStats);
-router.route('/monthly-plan/:year').get(getMonthlyPlan);
+router.route('/monthly-plan/:year')
+    .get(
+        protect, 
+        restrictTo('admin', 'lead-guide', 'guide'), 
+        getMonthlyPlan
+    );
+
 router.route('/top-5').get(aliasTopTours, getAllTours);
 
 router.route('/')
-.get(protect, getAllTours)
-.post(createTour);
+    .get(getAllTours)
+    .post(protect, restrictTo('admin', 'lead-guide'), createTour);
 
 router.route('/:id')
-.get(getTour)
-.patch(updateTour)
-.delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
+    .get(getTour)
+    .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
+    .delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
 module.exports = router;

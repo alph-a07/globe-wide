@@ -15,7 +15,11 @@ const app = require('./app');
 
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 
-mongoose.connect(DB).then(_ => console.log('Connected to DB!'));
+mongoose
+    .connect(DB, {
+        autoIndex: true,
+    })
+    .then(_ => console.log('Connected to DB!'));
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {

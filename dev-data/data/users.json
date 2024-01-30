@@ -6,7 +6,7 @@
         "role": "admin",
         "active": true,
         "photo": "user-1.jpg",
-        "password": "$2a$12$w42WAdoqRGsy.Xmgiv7ZZ.NeulmHEqSpTaWUfYL9rEs1rWzz7Okq."
+        "password": "$2a$12$lEefBrxKCxx5caOb1nydOet4Y3CtnCmSUeDMTrtcgVOLjUhUr6qEG"
     },
     {
         "_id": "5c8a1dfa2f8fb814b56fa181",
@@ -15,7 +15,7 @@
         "role": "user",
         "active": true,
         "photo": "user-2.jpg",
-        "password": "$2a$12$H3XttsbY8kmXXUEbgmraj.M/JELvuwyekETtJ3smPQKqYk0y0EHRi"
+        "password": "$2a$12$4otFDWVUyy0Y5mqhzIG6j.7C1E/Hrk/zWKU5Wk7pq6tyZAcM0BxXa"
     },
     {
         "_id": "5c8a1e1a2f8fb814b56fa182",
@@ -24,7 +24,7 @@
         "role": "user",
         "active": true,
         "photo": "user-3.jpg",
-        "password": "$2a$12$GAT0etXoGYo/YY/cAYt3deEj00yFZ7PQVUJ1tWMkhrpB2YEyM1N6."
+        "password": "$2a$12$AHkzMsTq/PXKH4MEzdeQcuMQ1ag2WRuDGow5X8DXOXzMYdPEZaOva"
     },
     {
         "_id": "5c8a1ec62f8fb814b56fa183",
@@ -33,7 +33,7 @@
         "role": "user",
         "active": true,
         "photo": "user-4.jpg",
-        "password": "$2a$12$Tg8HLeOAkGWXAbrJzFPSBuI1Ai7fyKQLbnDtzxWhEFQSB9EEA9QU2"
+        "password": "$2a$12$V6eO6N2n5FLO8epx7xYGxuLxM4YTHutsvK4xxKIos4xDkF0mIHjua"
     },
     {
         "_id": "5c8a1f292f8fb814b56fa184",
@@ -42,7 +42,7 @@
         "role": "guide",
         "active": true,
         "photo": "user-5.jpg",
-        "password": "$2a$12$GP02fiwC2MetEf9ggY63n.iy71ba76dfE/qK6FkPY3TbBgR1/7IG6"
+        "password": "$2a$12$W0PVYoRLlDYpv1FhDT6KTuku9.TY16j0E9nlEUwWkuGI5kL8QtVSm"
     },
     {
         "_id": "5c8a1f4e2f8fb814b56fa185",
@@ -51,7 +51,7 @@
         "role": "guide",
         "active": true,
         "photo": "user-6.jpg",
-        "password": "$2a$12$qD4rgQ7CqqPR88XIWmGd3ukCirpIDDHhbhVuaU3DS2uBMV4StgvQy"
+        "password": "$2a$12$RMDyCekHSCiHvJC4kPL6MeZMj7WsS8.OC8Itpuj4TEfah/hElGJCC"
     },
     {
         "_id": "5c8a201e2f8fb814b56fa186",
@@ -60,7 +60,7 @@
         "role": "guide",
         "active": true,
         "photo": "user-7.jpg",
-        "password": "$2a$12$bQRFNt3QgSsRG/8uEeiFaODsX3JHtfusDJzl8J0xJGdCWy/0YXo3m"
+        "password": "$2a$12$CoZ.HoaFWD0Az9EN3W9OpOCPEl1nwdBrpje05FYv15PFHxhwtiUOm"
     },
     {
         "_id": "5c8a20d32f8fb814b56fa187",
@@ -69,7 +69,7 @@
         "role": "user",
         "active": true,
         "photo": "user-8.jpg",
-        "password": "$2a$12$vpXMWmwJOITqH2lR3yLGdOd1SQRW4pjmp5XQa6d9z06JHgFCJAyx6"
+        "password": "$2a$12$aGlH/sgYTEUG8gN9LKrilOO8FOJT/W9.CzWOb0d.8S9oa1uC4W2Z6"
     },
     {
         "_id": "5c8a211f2f8fb814b56fa188",
@@ -78,7 +78,7 @@
         "role": "user",
         "active": true,
         "photo": "user-9.jpg",
-        "password": "$2a$12$zMeTZS298p1Y/RoljHbgguyU/5JhTfdt9r/M4/l4w5IOzM9FrXZSG"
+        "password": "$2a$12$Sn3NMiBBghQ7c8mUdVV8RuebObsHyhGkYRxi8QK/S6EnFnv.VF3EK"
     },
     {
         "_id": "5c8a21d02f8fb814b56fa189",
@@ -87,7 +87,7 @@
         "role": "lead-guide",
         "active": true,
         "photo": "user-10.jpg",
-        "password": "$2a$12$tAv5I6qvV75Mvu2.B6xQCe/DbChajET7CGPTQuGoHk9w7kQ2xscpK"
+        "password": "$2a$12$iVZ5vb/eJ1io3UQKez5Za.XdAaZeMdLRR1TJj3u0Nh7xYCWjXgjHm"
     },
     {
         "_id": "5c8a21f22f8fb814b56fa18a",
@@ -96,7 +96,7 @@
         "role": "lead-guide",
         "active": true,
         "photo": "user-11.jpg",
-        "password": "$2a$12$92T0ldlX0RKRGSyBm4kaneqOn3UTwTNDDTgqyWUuV9AxLHx55AYhG"
+        "password": "$2a$12$/dHJvia0T1IlkXWPqFs7juuXHL6pE2KlEytxPeEiCfH1WhDYp.mvy"
     },
     {
         "_id": "5c8a22c62f8fb814b56fa18b",
@@ -105,7 +105,7 @@
         "role": "lead-guide",
         "active": true,
         "photo": "user-12.jpg",
-        "password": "$2a$12$jKY2HlSqWa0BwXewA7AKdeHcLYmKi6qfiXVT/JBrJFpMuzBd6Lq5C"
+        "password": "$2a$12$D1zjZFQX.kCcUtrDXoDjROEK2A7A74a.nj2P17I7Z2tc3.IXUHoS."
     },
     {
         "_id": "5c8a23412f8fb814b56fa18c",
@@ -114,7 +114,7 @@
         "role": "guide",
         "active": true,
         "photo": "user-13.jpg",
-        "password": "$2a$12$JT1CnlkX8.DBcIQEak2qrOvzILhKGGNSLAVG3Vp0zg4V1UP464OOS"
+        "password": "$2a$12$VoEh90li9bHjHRPDv5/oH.Yvw09cXGMJH4cCGWZ0XucJ3IzxkgfM6"
     },
     {
         "_id": "5c8a23c82f8fb814b56fa18d",
@@ -123,7 +123,7 @@
         "role": "user",
         "active": true,
         "photo": "user-14.jpg",
-        "password": "$2a$12$eAaJnjsE3rsSyKlj9ae33OdL/YcRAh88Tbq8QLcHehT9Dub0Ws8Ei"
+        "password": "$2a$12$k10NbhP8U2PgzVPMMzY8GeK1l.q4xYeFwenglE.oazj89NrEg5reC"
     },
     {
         "_id": "5c8a23de2f8fb814b56fa18e",
@@ -132,7 +132,7 @@
         "role": "user",
         "active": true,
         "photo": "user-15.jpg",
-        "password": "$2a$12$jzyreG1SRH3vALoiF4q2Xe519nCE2zNcv/iA8s//7YMmfwQ/tsjGi"
+        "password": "$2a$12$NBuim5dlIxwXfYO/BuHA4eHVC2oqIfOzP7p5KBomPUDU/HMtGjDw2"
     },
     {
         "_id": "5c8a24282f8fb814b56fa18f",
@@ -141,7 +141,7 @@
         "role": "user",
         "active": true,
         "photo": "user-16.jpg",
-        "password": "$2a$12$kVkFxxvSaQkFj8BBFLtTnucVsw4JQrfmkio7YjT5ZaptqKSPBxjE6"
+        "password": "$2a$12$eL.M.JjDT7rE.MwVkuO03.9r3y9THBGFLTjYSYLmpxF9w4LprLjGG"
     },
     {
         "_id": "5c8a24402f8fb814b56fa190",
@@ -150,7 +150,7 @@
         "role": "user",
         "active": true,
         "photo": "user-17.jpg",
-        "password": "$2a$12$a//roJJSBwXSfKFGW1MTw.JxKU5nXlpdWKJcnEeX1eZWqPixTMmpC"
+        "password": "$2a$12$zcB8oUJnlzrvsZ8z6aqCpeXRbVqdNV9mQBaftfgoxXFvmvWL6/7k."
     },
     {
         "_id": "5c8a245f2f8fb814b56fa191",
@@ -159,7 +159,7 @@
         "role": "user",
         "active": true,
         "photo": "user-18.jpg",
-        "password": "$2a$12$yiyAiELUpUAGT/JaZ3C5guZM6dSdRSeGxbbHd8G6HamB6QuvCq0IG"
+        "password": "$2a$12$F4zUvRqxsDlh2UuXPCn8GOD4lyCf6GMiqpvWj.YFNwOw2e5kXmso6"
     },
     {
         "_id": "5c8a24822f8fb814b56fa192",
@@ -168,7 +168,7 @@
         "role": "user",
         "active": true,
         "photo": "user-19.jpg",
-        "password": "$2a$12$0D3FqLdU.A7mMmFvXx9ISuegrU67.Wax3Tx2aC2z9JoBQsOL7lhmC"
+        "password": "$2a$12$M3xb3ilDjk5sKNkN/E4l2eqQJE1rpW0uCrSZEzqmJOi8V/QE7rvaO"
     },
     {
         "_id": "5c8a24a02f8fb814b56fa193",
@@ -177,6 +177,6 @@
         "role": "user",
         "active": true,
         "photo": "user-20.jpg",
-        "password": "$2a$12$DSJm.GPVesNsXJq05.rZY.652NN4cueZ6fqe5gXlfWTbwEY9/mZo2p"
+        "password": "$2a$12$XIWzWCRKIC.D7mnal2XZk.0z9RNJEXfecNPyGawtcucH1FP6R0b5q"
     }
 ]
